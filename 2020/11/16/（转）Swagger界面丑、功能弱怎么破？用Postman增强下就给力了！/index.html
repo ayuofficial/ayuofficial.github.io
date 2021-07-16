@@ -1,0 +1,495 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Ayu">
+  <meta name="keywords" content="">
+  
+  <title>[转] Swagger界面丑、功能弱怎么破？用Postman增强下就给力了！ - Ayu</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"ayuofficial.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Ayu's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/nav.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="[转] Swagger界面丑、功能弱怎么破？用Postman增强下就给力了！">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-11-16 11:30" pubdate>
+        2020年11月16日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      753 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      8
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">[转] Swagger界面丑、功能弱怎么破？用Postman增强下就给力了！</h1>
+            
+            <div class="markdown-body">
+              <h2 id="原文转载链接：Swagger-boot-by-Postman"><a href="#原文转载链接：Swagger-boot-by-Postman" class="headerlink" title="原文转载链接：Swagger-boot by Postman"></a>原文转载链接：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU1Nzg4NjgyMw==&mid=2247487687&idx=1&sn=d4f54d6b369c6db9ba0c267ed521ff72&chksm=fc2faccfcb5825d94c59290fee323da33f69a6d0a4c2b1a83d3d70efa5618e9f280c619c0666&mpshare=1&scene=23&srcid=1116SBKUGP4rWWV9ROCsMgZN&sharer_sharetime=1605497165695&sharer_shareid=86f52b152633f8337571275e15a944dd#rd">Swagger-boot by Postman</a></h2><blockquote>
+<p>在使用Swagger的时候，你是否会有这种感觉：提交参数为JSON没法格式化，参数错了查找麻烦，返回结果没法折叠，太长了没法看！Swagger结合Postman使用后这一情况有很大改变，今天我们来讲下如何使用Postman增强Swagger的功能，希望对大家有所帮助！</p>
+</blockquote>
+<h2 id="Postman使用"><a href="#Postman使用" class="headerlink" title="Postman使用"></a>Postman使用</h2><p>Postman是一款非常好用的接口调试工具，界面漂亮且功能强大，对Postman不了解的可以看下<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU1Nzg4NjgyMw==&mid=2247483933&idx=1&sn=8373e9b9389939063fb24c2bb3c16e03&scene=21#wechat_redirect">《Postman：API接口调试利器》</a>。</p>
+<h2 id="Swagger结合Postman使用"><a href="#Swagger结合Postman使用" class="headerlink" title="Swagger结合Postman使用"></a>Swagger结合Postman使用</h2><blockquote>
+<p>下面介绍下如何将Swagger API导入到Postman中去，然后使用Postman来调试接口。</p>
+</blockquote>
+<h3 id="Swagger-API导入Postman"><a href="#Swagger-API导入Postman" class="headerlink" title="Swagger API导入Postman"></a>Swagger API导入Postman</h3><ul>
+<li>首先我们需要启动使用了Swagger的应用项目，这里以之前的<code>mall-tiny-swagger</code>项目为例子，找到<code>api-docs</code>路径，访问地址：<a target="_blank" rel="noopener" href="http://localhost:8088/swagger-ui/">http://localhost:8088/swagger-ui/</a></li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/CKvMdchsUwkSMcRrlm7k2xl4ADcYcl4JrSBmuTia2XmzicIRtHeT7XdvzSwgtFGNwiao16lctHNv2Ag7zN3a8XW3w/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ul>
+<li>什么是Swagger的<code>api-docs</code>访问路径？该路径会返回JSON格式数据，应用中Swagger渲染API文档页面的所有数据就是来源于此，Postman也是可以通过这些数据来渲染API文档页面，这里的<code>api-docs</code>地址为：<a target="_blank" rel="noopener" href="http://localhost:8088/v2/api-docs">http://localhost:8088/v2/api-docs</a></li>
+</ul>
+<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ul>
+<li>在postman中点击<code>import</code>按钮，选择<code>Link</code>，输入Swagger的<code>api-docs</code>路径即可将Swagger生成的接口导入到Postman中去了；</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/CKvMdchsUwkSMcRrlm7k2xl4ADcYcl4Jfk9fHzY80lQz9T4bibX8RKcBe4Ccm9ThKibUN7uSeZWU0p6bP8ibzibhMg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ul>
+<li>直接使用默认选项导入即可，无需修改；</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/CKvMdchsUwkSMcRrlm7k2xl4ADcYcl4JVM9ps8NkwIAdl8fEntuu7p5MdAjUo4K7Xx6nuklghVwBjkErGuicepg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ul>
+<li>导入成功后，Swagger中的接口就会出现在Postman中了，之后就只需要在Postman中改改参数就可以开始调试接口了，是不是很方便！</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/CKvMdchsUwkSMcRrlm7k2xl4ADcYcl4J4nMulrDzeeIIdnRFCaOVg6t3UHfpUcqTLib1rsibmYHfWzHYd87s1Ruw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="Postman设置环境变量"><a href="#Postman设置环境变量" class="headerlink" title="Postman设置环境变量"></a>Postman设置环境变量</h3><ul>
+<li>我们随意找个接口访问下，会发现访问出错了，那是因为<code>baseUrl</code>这个环境变量设置有问题，导致了接口无法访问；</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/CKvMdchsUwkSMcRrlm7k2xl4ADcYcl4JcyWlibQrxq4I4ff9xdM0k8na6xklJGtTptxe3MJCP2aMunKLTYDAnvw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ul>
+<li>我们只要在Postman中设置<code>baseUrl</code>这个环境变量，就可以正常访问了；</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/CKvMdchsUwkSMcRrlm7k2xl4ADcYcl4JEFP0CeJZiaT6QfPMIOQqbC3aRicIaf3Td3Nkn8YEVY8NeA58UdLkHVKw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ul>
+<li>添加好环境变量之后，需要选择好环境才会被应用。</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/CKvMdchsUwkSMcRrlm7k2xl4ADcYcl4JlDNLPEAzhKENfMFbb1sWNkia6PSgibuuHQB8u2fNjDhWiamol05z6ONkQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="访问需要登录认证的接口"><a href="#访问需要登录认证的接口" class="headerlink" title="访问需要登录认证的接口"></a>访问需要登录认证的接口</h3><ul>
+<li>这时候再次访问接口会发现我们的接口需要登录认证才能正常访问；</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/CKvMdchsUwkSMcRrlm7k2xl4ADcYcl4JgdTv1AUpfpV4LKH7JYOuiaO0dE3191VvYdsYHtog2HBOwIb3fCvHYoQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ul>
+<li>我们可以先调用登录接口来获取Token；</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/CKvMdchsUwkSMcRrlm7k2xl4ADcYcl4JmH32gvl3qCJagtSxSO4icG21WmVyIXQsyuK9SdnsZTib3Mh2BciaMbROA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ul>
+<li>给需要登录认证的接口添加<code>Bearer Token</code>类型的Token，我们可以发现需要配置一个叫<code>token</code>的环境变量；</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/CKvMdchsUwkSMcRrlm7k2xl4ADcYcl4JvLkb2H9wwwniaQJJppyEfrbQ6CicibsHBbuTmeicC3lUzEoicicIdxd1Vbqw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ul>
+<li>在环境变量中添加<code>token</code>；</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/CKvMdchsUwkSMcRrlm7k2xl4ADcYcl4J8ReCFFQeFeIdkgPoZ4eESk277woW7CPEynKcB6SnjKicJH06baP9ziag/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ul>
+<li>添加完环境变量后即可正常访问需要登录认证的接口了。</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/CKvMdchsUwkSMcRrlm7k2xl4ADcYcl4JG50YibaSNvLXBLILiaNuQKJQQkCE9kKDp8gRwib3Gpk96Oib7L9OicO98zA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="有何缺点"><a href="#有何缺点" class="headerlink" title="有何缺点"></a>有何缺点</h2><blockquote>
+<p>此种方法使用Postman来调试接口是非常强大的，但是对于文档展示能力有点偏弱。</p>
+</blockquote>
+<ul>
+<li>比如说Swagger中的接口对于请求和返回参数都有非常完善的注释信息；</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/CKvMdchsUwkSMcRrlm7k2xl4ADcYcl4JZPfPo7gC7pAF7RKP4RlpicUwyGIfpcJpGhDLtIeicLYE5EHx4BOD8PqA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ul>
+<li>而在Postman中，这些文档信息得不到体现，Postman毕竟还只是一个接口调试工具。</li>
+</ul>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/CKvMdchsUwkSMcRrlm7k2xl4ADcYcl4JZibyZwhQdZNYFv6ibickO0mCa7WUYIOaiarlQ1gpczI7siamibhNdM8EmJicA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Swagger和Postman结合使用比较好，Swagger用来看接口文档信息，Postman用于调试，将Swagger中的接口导入到Postman中可以弥补Swagger在接口调试方面的不足。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/03/25/SSH%E7%99%BB%E5%BD%95%E8%99%9A%E6%8B%9F%E6%9C%BAlocalhost%E5%8F%8D%E5%90%91%E8%A7%A3%E6%9E%90%E6%85%A2/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">SSH登录虚拟机localhost反向解析慢</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/10/13/SpringBoot-Cloud-Alibaba%E7%89%88%E6%9C%AC%E5%AF%B9%E5%BA%94/">
+                        <span class="hidden-mobile">SpringBoot-Cloud-Alibaba版本对应</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
