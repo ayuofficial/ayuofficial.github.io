@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.2k 字
+      2.4k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      23
+      25
        分钟
     </span>
   
@@ -316,7 +316,9 @@
 <p>具有<strong>可组合性</strong>和<strong>闭包性</strong>。</p>
 <h3 id="选择"><a href="#选择" class="headerlink" title="选择"></a>选择</h3><p>TAX 中的选择类比于关系操作里的选择明显相似在于返回输入树满足指定选择谓词的集合（通过模式指定）。</p>
 <p>但是，我们不仅想知道某棵树满足了谓词，还想知道 <strong>“如何”</strong> 满足谓词。故应返回相应的证据树，而不是数据树的某一个满足位。</p>
-<h2 id="TAX-的表达能力"><a href="#TAX-的表达能力" class="headerlink" title="TAX 的表达能力"></a>TAX 的表达能力</h2><p><strong>定理1，带聚合的RA的完备性：</strong> 有一个编码方案 Rep ，它将关系数据库映射到数据树表示。这样，对于每个关系数据库 D ，以及用聚合扩展的关系代数中的每个表达式 Q ，都有一个在 TAX 中对应的表达式 Q‘ ，例如：<script type="math/tex">y=x^2</script></p>
+<h2 id="TAX-的表达能力-todo"><a href="#TAX-的表达能力-todo" class="headerlink" title="TAX 的表达能力//todo"></a><em>TAX 的表达能力//todo</em></h2><p><strong>定理1，带聚合的RA的完备性：</strong> 有一个编码方案 Rep ，它将关系数据库映射到数据树表示。这样，对于每个关系数据库 D ，以及用聚合扩展的关系代数中的每个表达式 Q ，都有一个在 TAX 中对应的表达式 Q‘ ，例如：<script type="math/tex">Q'(Reg(D)) = Rep(Q(D))</script>。</p>
+<p><strong>定义3，规范的XQuery语句：</strong>一个规范的XQuery语句是XQuery[7]的一个“FLWR”表达式，这样:(i)每个FOR和LET子句中的变量声明范围是一个路径表达式;(ii)在任何表达式中没有函数调用或递归;并且(iii)所有使用的正则路径表达式只涉及常量、通配符，并且可以进一步使用’  / ‘和’ // ‘。</p>
+<p><strong>定理2，规范的XQuery翻译：</strong>让Q是一个规范的XQuery语句，这样Q就不会引入输入集合中不存在的祖先-后代关系，然后在TAX中有一个表达式E与Q等价。</p>
 <h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><p><em>见 原文。</em></p>
 
             </div>
