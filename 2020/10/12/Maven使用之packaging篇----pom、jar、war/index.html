@@ -228,12 +228,11 @@
             <h1 style="display: none">Maven使用之packaging篇----pom、jar、war</h1>
             
             <div class="markdown-body">
-              <h1 id="maven使用之packaging篇-pom-jar-war"><a class="markdownIt-Anchor" href="#maven使用之packaging篇-pom-jar-war"></a> Maven使用之packaging篇----pom、jar、war</h1>
-<p>综述：</p>
-<p>项目的打包类型：pom、jar、war</p>
-<p>1.pom工程：用在父级工程或聚合工程中。用来做jar包的版本控制。</p>
-<p>2.war工程：将会打包成war，发布在服务器上的工程。如网站或服务。</p>
-<p>3.jar工程：将会打包成jar用作jar包使用，packaging默认类型。</p>
+              <h1 id="Maven使用之packaging篇——pom、jar、war"><a href="#Maven使用之packaging篇——pom、jar、war" class="headerlink" title="Maven使用之packaging篇——pom、jar、war"></a>Maven使用之packaging篇——pom、jar、war</h1><p>综述：</p>
+<p>   项目的打包类型：pom、jar、war</p>
+<p>   1.pom工程：用在父级工程或聚合工程中。用来做jar包的版本控制。</p>
+<p>   2.war工程：将会打包成war，发布在服务器上的工程。如网站或服务。</p>
+<p>   3.jar工程：将会打包成jar用作jar包使用，packaging默认类型。</p>
 <p>项目中一般使用maven进行模块管理，每个模块下对应都有一个pom文件，pom文件中维护了各模块之间的依赖和继承关系。项目模块化可以将通用的部分抽离出来，方便重用；修改一部分代码不再是build整个项目，缩短了build时间；此外各模块都有自己的pom文件，结构更清晰。</p>
 <p>使用maven进行模块划分管理，一般都会有一个父级项目，pom文件除了GAV(groupId, artifactId, version)是必须要配置的，另一个重要的属性就是packaging打包类型，所有的父级项目的packaging都为pom，packing默认是jar类型，如果不作配置，maven会将该项目打成jar包。作为父级项目，还有一个重要的属性，那就是modules，通过modules标签将项目的所有子项目引用进来，在build父级项目时，会根据子模块的相互依赖关系整理一个build顺序，然后依次build。</p>
 <p>而对于各个子项目，需要在其对应的pom文件开头申明对父级项目的引用，通过GAV实现。对于子项目自己的GAV配置，GV如果不配置，则会从父级项目的配置继承过来。子模块可通过dependencies标签来添加自己的依赖，此外子类项目的packaging值一般是war或者jar，前面已经说过，packaging默认是jar类型。如果是需要部署的项目，则需要打包成war类型，如果只是内部调用或者是作服务使用，则推荐打包成jar类型。</p>
